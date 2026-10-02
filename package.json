@@ -1,0 +1,119 @@
+{
+  "name": "apiswitch",
+  "version": "1.0.1",
+  "description": "ApiSwitch — one-click Codex Official ↔ relay switcher for macOS and Windows",
+  "main": "./out/main/index.js",
+  "author": "ApiSwitch",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/apiswitch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/apiswitch/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/apiswitch#readme",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "dist:mac": "npm run build && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir --arm64 --x64",
+    "dist:mac:dir": "npm run build && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir --arm64 && node scripts/zip-mac-unpacked.mjs",
+    "package:mac": "npm run dist:mac:dir",
+    "dist:win": "npm run build && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win --x64",
+    "dist:win:dir": "npm run build && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win dir --x64 && node scripts/zip-win-unpacked.mjs",
+    "package:win": "npm run dist:win:dir",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json"
+  },
+  "dependencies": {
+    "keytar": "^7.9.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.4.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.8.2",
+    "vite": "^5.4.14",
+    "vitest": "^3.0.8"
+  },
+  "build": {
+    "appId": "com.vincentz.apiswitch",
+    "productName": "ApiSwitch",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": ".",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "resources/icon.ico",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "ApiSwitch-${version}-win-${arch}.${ext}"
+    },
+    "mac": {
+      "icon": "resources/icon-512.png",
+      "category": "public.app-category.developer-tools",
+      "identity": null,
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "artifactName": "ApiSwitch-${version}-mac-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "allowScripts": {
+    "electron": true,
+    "esbuild": true,
+    "keytar": true
+  }
+}

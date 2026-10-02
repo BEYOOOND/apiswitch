@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build / package outputs
+out/
+release/
+dist/
+*.tsbuildinfo
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Env & secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+.credentials.json
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test / cache
+coverage/
+.vite/
