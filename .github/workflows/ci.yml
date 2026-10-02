@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  electron:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,3 +17,26 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run typecheck
+
+  macos-native:
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: macos
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test
+        run: |
+          if xcodebuild -version >/dev/null 2>&1; then
+            xcrun --sdk macosx swift test
+          else
+            xcrun --sdk macosx swift run CoreSmoke
+          fi
+      - name: Build app bundle
+        run: ./scripts/build.sh
+      - name: Verify bundle
+        run: |
+          test -x build/ApiSwitch.app/Contents/MacOS/ApiSwitch
+          /usr/libexec/PlistBuddy -c 'Print :LSUIElement' build/ApiSwitch.app/Contents/Info.plist | grep -q true
+      - name: Core smoke (always)
+        run: xcrun --sdk macosx swift run -c release CoreSmoke

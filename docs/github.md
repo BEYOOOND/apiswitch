@@ -1,39 +1,48 @@
-# 发布到 GitHub（个人备份与主页）
+# 上传 GitHub
 
-本仓库已整理为可直接公开的源码形态（无构建产物、无密钥、无历史原型）。
+本仓库为 **ApiSwitch** 正式源码归档：
 
-## 首次上传
+| 端 | 路径 | 版本 |
+|----|------|------|
+| macOS 原生 | `macos/` | 1.1.0 |
+| Windows Electron | 仓库根目录 | 1.0.1 |
 
-1. 在 GitHub 新建空仓库（建议名 `apiswitch`，Public 或 Private 均可）。
-2. 将本仓库 `package.json` 中的 `YOUR_USERNAME` 换成你的 GitHub 用户名。
-3. 在本目录执行：
+## 上传前
+
+1. 将 [`package.json`](../package.json) 中 `YOUR_USERNAME` 换成你的 GitHub 用户名。
+2. 确认未跟踪构建产物（`dist/`、`node_modules/`、`macos/.build/`、`macos/build/` 已在 `.gitignore`）。
 
 ```bash
-git init
+cd /path/to/apiswitch
+git status
 git add .
-git commit -m "chore: release ApiSwitch v1.0.1 (Codex-only Electron)"
+git commit -m "$(cat <<'EOF'
+release: ApiSwitch macOS 1.1.0 + Windows Electron 1.0.1
+
+Native menu-bar Mac app and Codex-only Electron for Windows,
+with shared ~/.apiswitch and ~/.codex configuration.
+EOF
+)"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/apiswitch.git
+git remote add origin https://github.com/YOUR_USERNAME/apiswitch.git   # 若尚未添加
 git push -u origin main
 ```
 
-或使用 GitHub CLI：
+或：`gh repo create apiswitch --public --source=. --remote=origin --push`
 
-```bash
-gh repo create apiswitch --public --source=. --remote=origin --push
-```
+## Releases 资产
 
-## 作为个人开发主页的一部分
+| 文件 | 命令 |
+|------|------|
+| `ApiSwitch-1.1.0-mac-arm64.zip` | `cd macos && ./scripts/package.sh` |
+| `ApiSwitch-1.0.1-win-x64.zip` | `npm run package:win` |
 
-- **一应用一仓库**：每个软件单独建仓，便于备份与展示。
-- **Profile README**：在 `https://github.com/YOUR_USERNAME/YOUR_USERNAME` 建特殊仓库，用 Markdown 列出项目卡片与链接。
-- **Release**：需要分发安装包时，用 GitHub Releases 上传 `dist/` 里的 zip（勿把 `dist/` 提交进 git）。
-- **不要提交**：`node_modules/`、`out/`、`release/`、`dist/`、`.env`、任何含 API Key 的文件。
+安装包用 Releases 上传；**不要**把 `dist/` 提交进 git。
 
-## 本项目检查清单
+## 检查清单
 
-- [x] 仅保留 Electron 正式源码
-- [x] README / LICENSE / CI
-- [x] `.gitignore` 排除构建与密钥
+- [x] 双端源码与文档
+- [x] CHANGELOG / LICENSE / CI
+- [x] 应用名统一为 ApiSwitch
 - [ ] 替换 `YOUR_USERNAME`
-- [ ] `git push` 到你的账号
+- [ ] `git push` 与创建 Release

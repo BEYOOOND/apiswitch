@@ -6,6 +6,8 @@ out/
 release/
 dist/
 *.tsbuildinfo
+macos/.build/
+macos/build/
 
 # Logs & OS
 *.log
