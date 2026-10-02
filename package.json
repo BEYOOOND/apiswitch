@@ -8,12 +8,12 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/apiswitch.git"
+    "url": "https://github.com/BEYOOOND/apiswitch.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/apiswitch/issues"
+    "url": "https://github.com/BEYOOOND/apiswitch/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/apiswitch#readme",
+  "homepage": "https://github.com/BEYOOOND/apiswitch#readme",
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",

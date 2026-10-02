@@ -1,34 +1,21 @@
 # 上传 GitHub
 
-本仓库为 **ApiSwitch** 正式源码归档：
+仓库归属：[BEYOOOND](https://github.com/BEYOOOND) · 项目：[apiswitch](https://github.com/BEYOOOND/apiswitch)
 
 | 端 | 路径 | 版本 |
 |----|------|------|
 | macOS 原生 | `macos/` | 1.1.0 |
 | Windows Electron | 仓库根目录 | 1.0.1 |
 
-## 上传前
-
-1. 将 [`package.json`](../package.json) 中 `YOUR_USERNAME` 换成你的 GitHub 用户名。
-2. 确认未跟踪构建产物（`dist/`、`node_modules/`、`macos/.build/`、`macos/build/` 已在 `.gitignore`）。
+## 推送
 
 ```bash
 cd /path/to/apiswitch
-git status
-git add .
-git commit -m "$(cat <<'EOF'
-release: ApiSwitch macOS 1.1.0 + Windows Electron 1.0.1
-
-Native menu-bar Mac app and Codex-only Electron for Windows,
-with shared ~/.apiswitch and ~/.codex configuration.
-EOF
-)"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/apiswitch.git   # 若尚未添加
+git remote add origin https://github.com/BEYOOOND/apiswitch.git   # 若尚未添加
 git push -u origin main
 ```
 
-或：`gh repo create apiswitch --public --source=. --remote=origin --push`
+或：`gh repo create BEYOOOND/apiswitch --public --source=. --remote=origin --push`
 
 ## Releases 资产
 
@@ -44,5 +31,5 @@ git push -u origin main
 - [x] 双端源码与文档
 - [x] CHANGELOG / LICENSE / CI
 - [x] 应用名统一为 ApiSwitch
-- [ ] 替换 `YOUR_USERNAME`
+- [x] `package.json` 指向 BEYOOOND/apiswitch
 - [ ] `git push` 与创建 Release
